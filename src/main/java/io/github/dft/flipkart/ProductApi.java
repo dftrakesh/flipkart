@@ -20,7 +20,8 @@ public class ProductApi extends FlipkartSdk {
     String SLASH_CHARACTER = "/";
     String TOKEN_NAME = "Bearer ";
     String CONTENT_TYPE = "Content-Type";
-    String CONTENT_TYPE_VALUE = "application/json; charset=utf-8";
+    String AUTHORIZATION_HEADER = "Authorization";
+    String CONTENT_TYPE_APPLICATION_JSON = "application/json; charset=utf-8";
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
@@ -35,7 +36,7 @@ public class ProductApi extends FlipkartSdk {
                 concat(UPDATE_PRODUCT).concat(SLASH_CHARACTER));
         HttpRequest request = HttpRequest.newBuilder(uri)
                 .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(skuHashMap)))
-                .header(CONTENT_TYPE, CONTENT_TYPE_VALUE)
+                .header(CONTENT_TYPE, CONTENT_TYPE_APPLICATION_JSON)
                 .headers(AUTHORIZATION_HEADER, TOKEN_NAME.concat(accessCredential.getAccessToken()))
                 .build();
 
@@ -49,7 +50,7 @@ public class ProductApi extends FlipkartSdk {
         System.out.println(uri);
         HttpRequest request = HttpRequest.newBuilder(uri)
                 .GET()
-                .header(CONTENT_TYPE, CONTENT_TYPE_VALUE)
+                .header(CONTENT_TYPE, CONTENT_TYPE_APPLICATION_JSON)
                 .headers(AUTHORIZATION_HEADER, TOKEN_NAME.concat(accessCredential.getAccessToken()))
                 .build();
 

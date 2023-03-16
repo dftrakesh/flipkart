@@ -17,8 +17,9 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @AllArgsConstructor
-@Builder(toBuilder = true)
+@Builder(builderMethodName = "newBuilder", toBuilder = true)
 public class FlipkartSdk {
+
     int TOO_MANY_REQUEST_EXCEPTION_CODE = 429;
     int MAX_ATTEMPTS = 50;
     int TIME_OUT_DURATION = 3000;
@@ -28,7 +29,7 @@ public class FlipkartSdk {
     String CLIENT_ID = "client_id";
     String OAUTH_BASE_END_POINT = "https://api.flipkart.net/oauth-service/oauth/token?";
     String CONTENT_TYPE = "Content-Type";
-    String CONTENT_TYPE_VALUE = "application/json; charset=utf-8";
+    String CONTENT_TYPE_APPLICATION_JSON = "application/json; charset=utf-8";
 
     protected HttpClient client;
     protected AccessCredential accessCredential;
@@ -39,8 +40,6 @@ public class FlipkartSdk {
         client = HttpClient.newHttpClient();
         this.objectMapper = new ObjectMapper();
         this.accessCredential = accessCredential;
-    }
-    public FlipkartSdk(HttpClient client, AccessCredential accessCredential, ObjectMapper objectMapper) {
     }
 
     @SneakyThrows
@@ -55,6 +54,7 @@ public class FlipkartSdk {
                 .thenApplyAsync(responseBody -> convertBody(responseBody, tClass))
                 .get();
     }
+
     @SneakyThrows
     private <T> T convertBody(String body, Class<T> tClass) {
         return objectMapper.readValue(body, tClass);
@@ -73,6 +73,7 @@ public class FlipkartSdk {
         }
         return CompletableFuture.completedFuture(resp);
     }
+
     @SneakyThrows
     protected void refreshAccessToken() {
 
@@ -88,7 +89,7 @@ public class FlipkartSdk {
 
             HttpRequest request = HttpRequest.newBuilder(uri)
                     .POST(HttpRequest.BodyPublishers.noBody())
-                    .header(CONTENT_TYPE, CONTENT_TYPE_VALUE)
+                    .header(CONTENT_TYPE, CONTENT_TYPE_APPLICATION_JSON)
                     .build();
 
             AccessTokenResponse accessTokenResponse = getRequestWrapped(request, AccessTokenResponse.class);
@@ -97,6 +98,7 @@ public class FlipkartSdk {
         }
 
     }
+
     @SneakyThrows
     protected URI addParameters(URI uri, HashMap<String, String> params) {
         String query = uri.getQuery();
@@ -110,5 +112,13 @@ public class FlipkartSdk {
             builder.append(keyValueParam);
         }
         return new URI(uri.getScheme(), uri.getAuthority(), uri.getPath(), builder.toString(), uri.getFragment());
+    }
+
+    public ProductApi getProductApi() {
+        return new ProductApi(accessCredential);
+    }
+
+    public UpdateInventoryApi getUpdateInventoryApi(){
+        return new UpdateInventoryApi(accessCredential);
     }
 }
