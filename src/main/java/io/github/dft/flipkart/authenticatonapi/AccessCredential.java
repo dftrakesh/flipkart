@@ -27,6 +27,4 @@ public class AccessCredential {
     private String clientSecret;
     private String clientId;
     private LocalDateTime expiresIn;
-
-
 }

@@ -3,19 +3,17 @@ package io.github.dft.flipkart.model.productapi;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import io.github.dft.flipkart.model.orderapi.AttributeError;
 import lombok.Data;
-
 import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class Sku {
+
     private String skuId;
     private String status;
     private List<Error> errors;
-    private List<AttributeError> attributeErrors;
     private String listingId;
     private String productId;
     private Price price;

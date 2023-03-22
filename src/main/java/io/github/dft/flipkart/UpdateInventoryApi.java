@@ -4,14 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.dft.flipkart.authenticatonapi.AccessCredential;
 import io.github.dft.flipkart.model.productapi.Sku;
 import lombok.SneakyThrows;
-
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.util.HashMap;
 
 
-
 public class UpdateInventoryApi extends FlipkartSdk {
+
     String API_BASE_END_POINT = "https://api.flipkart.net/sellers";
     String INVENTORY_ENDPOINT = "/listings";
     String PRODUCT_ENDPOINT = "/v3";

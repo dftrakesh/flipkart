@@ -9,6 +9,7 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class Price {
+
     private Integer mrp;
     private Integer flipkartSellingPrice;
     private String currency;
@@ -16,5 +17,4 @@ public class Price {
     private Integer nlc;
     private Integer dealerPrice;
     private Integer mop;
-
 }

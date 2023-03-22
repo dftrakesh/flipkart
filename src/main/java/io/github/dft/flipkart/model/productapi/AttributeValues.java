@@ -9,6 +9,7 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class AttributeValues {
+
     private String listingStatus;
     private String procurementSla;
     private String zonalShippingCharge;
@@ -17,6 +18,4 @@ public class AttributeValues {
     private String mrp;
     private String stockCount;
     private String localShippingCharge;
-
-
 }

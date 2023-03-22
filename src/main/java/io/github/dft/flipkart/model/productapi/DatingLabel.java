@@ -9,6 +9,7 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class DatingLabel {
+
     private String mfgDate;
     private String shelfLife;
     private String expiryDate;

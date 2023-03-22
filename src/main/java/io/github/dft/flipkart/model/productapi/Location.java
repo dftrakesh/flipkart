@@ -9,10 +9,9 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class Location {
+
     private String id;
     private String status;
     private Integer inventory;
     private Integer pendingInventory;
-
-
 }
