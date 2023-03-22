@@ -9,6 +9,7 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class Package {
+
     private String id;
     private String name;
     private Dimensions dimensions;
@@ -16,5 +17,4 @@ public class Package {
     private String description;
     private Handling handling;
     private NotionalValue notionalValue;
-
 }

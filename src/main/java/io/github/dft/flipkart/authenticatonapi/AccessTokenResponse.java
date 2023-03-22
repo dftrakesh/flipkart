@@ -12,6 +12,7 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class AccessTokenResponse {
+
     private String accessToken;
     private Integer expiresIn;
 }

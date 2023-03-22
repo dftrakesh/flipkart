@@ -9,8 +9,6 @@ import java.net.URI;
 import java.net.http.HttpRequest;
 import java.util.HashMap;
 
-import static io.github.dft.flipkart.constantCodes.ConstantCodes.AUTHORIZATION_HEADER;
-
 
 public class ProductApi extends FlipkartSdk {
     String API_BASE_END_POINT = "https://api.flipkart.net/sellers";
@@ -28,6 +26,7 @@ public class ProductApi extends FlipkartSdk {
     public ProductApi(AccessCredential accessCredential) {
         super(accessCredential);
     }
+
     @SneakyThrows
     public HashMap<String, Sku> updateProduct(HashMap<String, Sku> skuHashMap) {
         URI uri = new URI(API_BASE_END_POINT.
@@ -42,6 +41,7 @@ public class ProductApi extends FlipkartSdk {
 
         return getRequestWrapped(request, HashMap.class);
     }
+
     @SneakyThrows
     public HashMap<String, Object> getProductById(String skuId) {
         URI uri = new URI(API_BASE_END_POINT
