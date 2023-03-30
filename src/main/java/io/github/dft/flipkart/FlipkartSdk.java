@@ -37,6 +37,7 @@ public class FlipkartSdk {
 
     @SneakyThrows
     public FlipkartSdk(AccessCredential accessCredential) {
+
         client = HttpClient.newHttpClient();
         this.objectMapper = new ObjectMapper();
         this.accessCredential = accessCredential;
@@ -47,13 +48,14 @@ public class FlipkartSdk {
 
         return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                 .thenComposeAsync(response -> tryResend(client, request, HttpResponse.BodyHandlers.ofString(), response, 1))
-                .thenApplyAsync(stringHttpResponse -> stringHttpResponse.body())
+                .thenApplyAsync(HttpResponse::body)
                 .thenApplyAsync(responseBody -> convertBody(responseBody, tClass))
                 .get();
     }
 
     @SneakyThrows
     private <T> T convertBody(String body, Class<T> tClass) {
+
         return objectMapper.readValue(body, tClass);
     }
 
@@ -93,11 +95,11 @@ public class FlipkartSdk {
             accessCredential.setAccessToken(accessTokenResponse.getAccessToken());
             accessCredential.setExpiresIn(LocalDateTime.now().plusSeconds(accessTokenResponse.getExpiresIn()));
         }
-
     }
 
     @SneakyThrows
     protected URI addParameters(URI uri, HashMap<String, String> params) {
+
         String query = uri.getQuery();
         StringBuilder builder = new StringBuilder();
         if (query != null)
@@ -112,10 +114,12 @@ public class FlipkartSdk {
     }
 
     public ProductApi getProductApi() {
+
         return new ProductApi(accessCredential);
     }
 
-    public UpdateInventoryApi getUpdateInventoryApi(){
+    public UpdateInventoryApi getUpdateInventoryApi() {
+
         return new UpdateInventoryApi(accessCredential);
     }
 }

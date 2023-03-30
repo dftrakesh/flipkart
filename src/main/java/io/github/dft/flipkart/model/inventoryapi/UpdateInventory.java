@@ -1,4 +1,4 @@
-package io.github.dft.flipkart.inventoryapi;
+package io.github.dft.flipkart.model.inventoryapi;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
