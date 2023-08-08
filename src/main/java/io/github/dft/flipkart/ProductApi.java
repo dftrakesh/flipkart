@@ -2,6 +2,7 @@ package io.github.dft.flipkart;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.dft.flipkart.authenticatonapi.AccessCredential;
+import io.github.dft.flipkart.model.productapi.Available;
 import io.github.dft.flipkart.model.productapi.Sku;
 import lombok.SneakyThrows;
 
@@ -45,7 +46,7 @@ public class ProductApi extends FlipkartSdk {
     }
 
     @SneakyThrows
-    public HashMap<String, Sku> getProductById(String skuId) {
+    public Available getProductById(String skuId) {
         URI uri = new URI(API_BASE_END_POINT
                 .concat(INVENTORY_ENDPOINT)
                 .concat(VERSION_ENDPOINT).concat(SLASH_CHARACTER + skuId));
@@ -54,6 +55,6 @@ public class ProductApi extends FlipkartSdk {
                 .headers(AUTHORIZATION_HEADER, accessCredentialApi.getAuthorizationHeader())
                 .build();
 
-        return getRequestWrapped(request, HashMap.class);
+        return getRequestWrapped(request, Available.class);
     }
 }
