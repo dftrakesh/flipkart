@@ -10,11 +10,11 @@ import lombok.Data;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class Price {
 
-    private Integer mrp;
-    private Integer flipkartSellingPrice;
+    private Double mrp;
+    private Double flipkartSellingPrice;
     private String currency;
-    private Integer sellingPrice;
+    private Double sellingPrice;
     private Integer nlc;
-    private Integer dealerPrice;
+    private Double dealerPrice;
     private Integer mop;
 }
