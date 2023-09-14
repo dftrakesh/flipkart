@@ -30,6 +30,9 @@ public class FlipkartSdk {
     String OAUTH_BASE_END_POINT = "https://api.flipkart.net/oauth-service/oauth/token?";
     String CONTENT_TYPE = "Content-Type";
     String CONTENT_TYPE_APPLICATION_JSON = "application/json; charset=utf-8";
+    String AUTHORIZATION_HEADER = "Authorization";
+    String TOKEN_NAME = "Bearer ";
+    String CONTENT_TYPE_VALUE = "application/json; charset=utf-8";
 
     protected HttpClient client;
     protected AccessCredential accessCredential;
@@ -41,6 +44,24 @@ public class FlipkartSdk {
         client = HttpClient.newHttpClient();
         this.objectMapper = new ObjectMapper();
         this.accessCredential = accessCredential;
+    }
+
+    @SneakyThrows
+    protected HttpRequest postWithObject(URI uri, Object object) {
+        return HttpRequest.newBuilder(uri)
+                .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(object)))
+                .header(CONTENT_TYPE, CONTENT_TYPE_VALUE)
+                .headers(AUTHORIZATION_HEADER, TOKEN_NAME.concat(accessCredential.getAccessToken()))
+                .build();
+    }
+
+    @SneakyThrows
+    protected HttpRequest get(URI uri) {
+        return HttpRequest.newBuilder(uri)
+                .GET()
+                .header(CONTENT_TYPE, CONTENT_TYPE_VALUE)
+                .headers(AUTHORIZATION_HEADER, TOKEN_NAME.concat(accessCredential.getAccessToken()))
+                .build();
     }
 
     @SneakyThrows
