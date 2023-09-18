@@ -139,6 +139,10 @@ public class FlipkartSdk {
         return new ProductApi(accessCredential);
     }
 
+    public OrderApi getOrderApi(){
+        return  new OrderApi(accessCredential);
+    }
+
     public UpdateInventoryApi getUpdateInventoryApi() {
 
         return new UpdateInventoryApi(accessCredential);

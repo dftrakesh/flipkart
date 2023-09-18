@@ -1,20 +1,29 @@
 package io.github.dft.flipkart.model.orderapi;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import io.github.dft.flipkart.model.common.LocalDateTimeDeserializer;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderItem {
 
-    private Long orderItemId;
+    private String orderItemId;
     private String orderId;
     private String cancellationGroupId;
-    private String orderDate;
-    private String deliverByDate;
-    private String cancellationDate;
+
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime orderDate;
+
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime deliverByDate;
+
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime cancellationDate;
     private String paymentType;
     private String status;
     private String cancellationReason;
@@ -32,9 +41,15 @@ public class OrderItem {
     private Boolean isReplacement;
     private String dispatchServiceTier;
     private Boolean hold;
-    private String dispatchAfterDate;
-    private String dispatchByDate;
-    private String updatedAt;
+
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime dispatchAfterDate;
+
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime dispatchByDate;
+
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime updatedAt;
     private Integer sla;
     private String shippingPincode;
     private List<String> stateDocuments;
