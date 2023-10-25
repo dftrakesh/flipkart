@@ -2,6 +2,7 @@ package io.github.dft.flipkart;
 
 import io.github.dft.flipkart.authenticatonapi.AccessCredential;
 import io.github.dft.flipkart.model.orderapi.OrderItem;
+import io.github.dft.flipkart.model.orderapi.OrderItemResponse;
 import io.github.dft.flipkart.model.orderapi.OrderRequest;
 import io.github.dft.flipkart.model.orderapi.OrderResponse;
 import io.github.dft.flipkart.model.orderapi.shipmentdetails.ShipmentResponse;
@@ -52,5 +53,13 @@ public class OrderApi extends FlipkartSdk {
 
         HttpRequest request = get(uri);
         return getRequestWrapped(request, ShipmentResponse.class);
+    }
+
+    public OrderItemResponse getOrderItems(HashMap<String, String> params) {
+        URI uri = URI.create(API_BASE_END_POINT + VERSION + ORDER_ENDPOINT);
+        uri = addParameters(uri, params);
+
+        HttpRequest request = get(uri);
+        return getRequestWrapped(request, OrderItemResponse.class);
     }
 }
