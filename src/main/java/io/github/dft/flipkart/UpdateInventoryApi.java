@@ -8,17 +8,18 @@ import java.net.URI;
 import java.net.http.HttpRequest;
 import java.util.HashMap;
 
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.API_BASE_END_POINT;
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.AUTHORIZATION_HEADER;
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.CONTENT_TYPE;
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.CONTENT_TYPE_APPLICATION_JSON;
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.INVENTORY_ENDPOINT;
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.SLASH_CHARACTER;
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.UPDATE_PRODUCT;
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.VERSION_V3_ENDPOINT;
+
 public class UpdateInventoryApi extends FlipkartSdk {
 
-    String API_BASE_END_POINT = "https://api.flipkart.net/sellers";
-    String INVENTORY_ENDPOINT = "/listings";
-    String PRODUCT_ENDPOINT = "/v3";
-    String UPDATE_PRODUCT = "/update";
     String UPDATE_INVENTORY = "/inventory";
-    String SLASH_CHARACTER = "/";
-    String AUTHORIZATION_HEADER = "Authorization";
-    String CONTENT_TYPE = "Content-Type";
-    String CONTENT_TYPE_APPLICATION_JSON = "application/json; charset=utf-8";
 
     private ObjectMapper objectMapper = new ObjectMapper();
     AccessCredentialApi accessCredentialApi = new AccessCredentialApi(accessCredential);
@@ -33,7 +34,7 @@ public class UpdateInventoryApi extends FlipkartSdk {
 
         URI uri = new URI(API_BASE_END_POINT
                 .concat(INVENTORY_ENDPOINT)
-                .concat(PRODUCT_ENDPOINT)
+                .concat(VERSION_V3_ENDPOINT)
                 .concat(UPDATE_PRODUCT)
                 .concat(UPDATE_INVENTORY)
                 .concat(SLASH_CHARACTER));

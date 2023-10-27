@@ -10,16 +10,16 @@ import java.net.URI;
 import java.net.http.HttpRequest;
 import java.util.HashMap;
 
-public class ProductApi extends FlipkartSdk {
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.API_BASE_END_POINT;
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.AUTHORIZATION_HEADER;
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.CONTENT_TYPE;
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.CONTENT_TYPE_APPLICATION_JSON;
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.INVENTORY_ENDPOINT;
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.SLASH_CHARACTER;
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.UPDATE_PRODUCT;
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.VERSION_V3_ENDPOINT;
 
-    String API_BASE_END_POINT = "https://api.flipkart.net/sellers";
-    String INVENTORY_ENDPOINT = "/listings";
-    String VERSION_ENDPOINT = "/v3";
-    String UPDATE_PRODUCT = "/update";
-    String SLASH_CHARACTER = "/";
-    String CONTENT_TYPE = "Content-Type";
-    String AUTHORIZATION_HEADER = "Authorization";
-    String CONTENT_TYPE_APPLICATION_JSON = "application/json; charset=utf-8";
+public class ProductApi extends FlipkartSdk {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
@@ -34,7 +34,7 @@ public class ProductApi extends FlipkartSdk {
     public HashMap<String, Sku> updateProduct(HashMap<String, Sku> skuHashMap) {
         URI uri = new URI(API_BASE_END_POINT.
                 concat(INVENTORY_ENDPOINT).
-                concat(VERSION_ENDPOINT).
+                concat(VERSION_V3_ENDPOINT).
                 concat(UPDATE_PRODUCT).concat(SLASH_CHARACTER));
         HttpRequest request = HttpRequest.newBuilder(uri)
                 .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(skuHashMap)))
@@ -49,7 +49,7 @@ public class ProductApi extends FlipkartSdk {
     public Available getProductById(String skuId) {
         URI uri = new URI(API_BASE_END_POINT
                 .concat(INVENTORY_ENDPOINT)
-                .concat(VERSION_ENDPOINT).concat(SLASH_CHARACTER + skuId));
+                .concat(VERSION_V3_ENDPOINT).concat(SLASH_CHARACTER + skuId));
         HttpRequest request = HttpRequest.newBuilder(uri)
                 .GET()
                 .headers(AUTHORIZATION_HEADER, accessCredentialApi.getAuthorizationHeader())
