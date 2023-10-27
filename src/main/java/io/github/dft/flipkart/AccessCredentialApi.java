@@ -9,12 +9,13 @@ import java.net.http.HttpRequest;
 import java.util.Base64;
 import java.util.HashMap;
 
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.AUTHORIZATION_HEADER;
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.TOKEN_NAME;
+
 public class AccessCredentialApi extends FlipkartSdk {
 
     String API_BASE_OAUTH_END_POINT = "https://api.flipkart.net/oauth-service/oauth";
     String TOKEN_ENDPOINT = "/token";
-    String TOKEN_NAME = "Bearer ";
-    private static final String AUTHORIZATION = "Authorization";
 
     public AccessCredentialApi(AccessCredential accessCredential) {
 
@@ -31,7 +32,7 @@ public class AccessCredentialApi extends FlipkartSdk {
         byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes());
         String authHeader = "Basic " + new String(encodedAuth);
         HttpRequest request = HttpRequest.newBuilder(uri)
-                .header(AUTHORIZATION, authHeader)
+                .header(AUTHORIZATION_HEADER, authHeader)
                 .GET()
                 .build();
 

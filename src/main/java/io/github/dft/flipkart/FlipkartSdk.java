@@ -16,6 +16,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.AUTHORIZATION_HEADER;
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.CONTENT_TYPE;
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.CONTENT_TYPE_APPLICATION_JSON;
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.TOKEN_NAME;
+
 @AllArgsConstructor
 @Builder(builderMethodName = "newBuilder", toBuilder = true)
 public class FlipkartSdk {
@@ -28,11 +33,6 @@ public class FlipkartSdk {
     String CLIENT_SECRET = "client_secret";
     String CLIENT_ID = "client_id";
     String OAUTH_BASE_END_POINT = "https://api.flipkart.net/oauth-service/oauth/token?";
-    String CONTENT_TYPE = "Content-Type";
-    String CONTENT_TYPE_APPLICATION_JSON = "application/json; charset=utf-8";
-    String AUTHORIZATION_HEADER = "Authorization";
-    String TOKEN_NAME = "Bearer ";
-    String CONTENT_TYPE_VALUE = "application/json; charset=utf-8";
 
     protected HttpClient client;
     protected AccessCredential accessCredential;
@@ -50,7 +50,7 @@ public class FlipkartSdk {
     protected HttpRequest postWithObject(URI uri, Object object) {
         return HttpRequest.newBuilder(uri)
                 .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(object)))
-                .header(CONTENT_TYPE, CONTENT_TYPE_VALUE)
+                .header(CONTENT_TYPE, CONTENT_TYPE_APPLICATION_JSON)
                 .headers(AUTHORIZATION_HEADER, TOKEN_NAME.concat(accessCredential.getAccessToken()))
                 .build();
     }
@@ -59,7 +59,7 @@ public class FlipkartSdk {
     protected HttpRequest get(URI uri) {
         return HttpRequest.newBuilder(uri)
                 .GET()
-                .header(CONTENT_TYPE, CONTENT_TYPE_VALUE)
+                .header(CONTENT_TYPE, CONTENT_TYPE_APPLICATION_JSON)
                 .headers(AUTHORIZATION_HEADER, TOKEN_NAME.concat(accessCredential.getAccessToken()))
                 .build();
     }
