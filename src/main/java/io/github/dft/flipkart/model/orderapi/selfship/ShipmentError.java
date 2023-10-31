@@ -5,9 +5,8 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ShipmentResponse {
-    private String shipmentId;
-    private String processingStatus;
-    private String errorCode;
-    private String errorMessage;
+public class ShipmentError {
+    private String type;
+    private String code;
+    private String message;
 }
