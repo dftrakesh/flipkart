@@ -1,4 +1,4 @@
-package io.github.dft.flipkart.model.v2.selfship;
+package io.github.dft.flipkart.model.v3.selfship;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
