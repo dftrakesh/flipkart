@@ -1,11 +1,11 @@
 package io.github.dft.flipkart;
 
 import io.github.dft.flipkart.authenticatonapi.AccessCredential;
-import io.github.dft.flipkart.model.orderapi.OrderItem;
-import io.github.dft.flipkart.model.orderapi.OrderItemResponse;
-import io.github.dft.flipkart.model.orderapi.OrderRequest;
-import io.github.dft.flipkart.model.orderapi.OrderResponse;
-import io.github.dft.flipkart.model.orderapi.shipmentdetails.ShipmentResponse;
+import io.github.dft.flipkart.model.v2.order.OrderItem;
+import io.github.dft.flipkart.model.v2.order.OrderItemResponse;
+import io.github.dft.flipkart.model.v2.order.OrderRequest;
+import io.github.dft.flipkart.model.v2.order.OrderResponse;
+import io.github.dft.flipkart.model.v2.order.shipmentdetails.ShipmentResponse;
 
 import java.net.URI;
 import java.net.http.HttpRequest;

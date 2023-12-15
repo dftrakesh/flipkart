@@ -2,7 +2,7 @@ package io.github.dft.flipkart.model.v3.shipment;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.github.dft.flipkart.model.common.LocalDateTimeDeserializer;
-import io.github.dft.flipkart.model.orderapi.OrderItem;
+import io.github.dft.flipkart.model.v2.order.OrderItem;
 import lombok.Data;
 
 import java.time.LocalDateTime;

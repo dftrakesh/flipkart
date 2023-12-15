@@ -1,4 +1,4 @@
-package io.github.dft.flipkart.model.orderapi;
+package io.github.dft.flipkart.model.v2.order;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.github.dft.flipkart.model.common.LocalDateTimeSerializer;

@@ -1,4 +1,4 @@
-package io.github.dft.flipkart.model.orderapi.selfship;
+package io.github.dft.flipkart.model.v2.selfship;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

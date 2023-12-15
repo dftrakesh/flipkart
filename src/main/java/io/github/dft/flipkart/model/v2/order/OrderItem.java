@@ -1,4 +1,4 @@
-package io.github.dft.flipkart.model.orderapi;
+package io.github.dft.flipkart.model.v2.order;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

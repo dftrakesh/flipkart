@@ -1,4 +1,4 @@
-package io.github.dft.flipkart.model.orderapi.shipmentdetails;
+package io.github.dft.flipkart.model.v2.order.shipmentdetails;
 
 import lombok.Data;
 
