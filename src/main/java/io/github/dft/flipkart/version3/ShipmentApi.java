@@ -1,9 +1,10 @@
-package io.github.dft.flipkart;
+package io.github.dft.flipkart.version3;
 
+import io.github.dft.flipkart.FlipkartSdk;
 import io.github.dft.flipkart.authenticatonapi.AccessCredential;
-import io.github.dft.flipkart.model.shipmentapi.ShipmentRequestWrapper;
-import io.github.dft.flipkart.model.shipmentapi.ShipmentResponseWrapper;
-import io.github.dft.flipkart.model.shipmentapi.ShipmentWrapper;
+import io.github.dft.flipkart.version3.model.generatelabel.GenerateLabelRequestWrapper;
+import io.github.dft.flipkart.version3.model.generatelabel.GenerateLabelResponseWrapper;
+import io.github.dft.flipkart.version3.model.shipment.ShipmentWrapper;
 
 import java.net.URI;
 import java.net.http.HttpRequest;
@@ -28,10 +29,10 @@ public class ShipmentApi extends FlipkartSdk {
         return getRequestWrapped(request, ShipmentWrapper.class);
     }
 
-    public ShipmentResponseWrapper generateLabel(ShipmentRequestWrapper shipmentRequestWrapper) {
+    public GenerateLabelResponseWrapper generateLabel(GenerateLabelRequestWrapper generateLabelRequestWrapper) {
         URI uri = URI.create(API_BASE_END_POINT + VERSION_V3_ENDPOINT + SHIPMENT_ENDPOINT + LABELS_ENDPOINT);
 
-        HttpRequest request = postWithObject(uri, shipmentRequestWrapper);
-        return getRequestWrapped(request, ShipmentResponseWrapper.class);
+        HttpRequest request = postWithObject(uri, generateLabelRequestWrapper);
+        return getRequestWrapped(request, GenerateLabelResponseWrapper.class);
     }
 }

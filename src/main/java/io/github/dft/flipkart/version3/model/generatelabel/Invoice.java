@@ -1,4 +1,4 @@
-package io.github.dft.flipkart.model.shipmentapi;
+package io.github.dft.flipkart.version3.model.generatelabel;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

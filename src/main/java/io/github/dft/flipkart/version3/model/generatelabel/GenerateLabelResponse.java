@@ -1,9 +1,9 @@
-package io.github.dft.flipkart.model.shipmentapi;
+package io.github.dft.flipkart.version3.model.generatelabel;
 
 import lombok.Data;
 
 @Data
-public class ShipmentResponse {
+public class GenerateLabelResponse {
 
     private String shipmentId;
     private String status;
