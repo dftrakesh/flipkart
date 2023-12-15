@@ -1,10 +1,9 @@
-package io.github.dft.flipkart.version3;
+package io.github.dft.flipkart;
 
-import io.github.dft.flipkart.FlipkartSdk;
 import io.github.dft.flipkart.authenticatonapi.AccessCredential;
-import io.github.dft.flipkart.version3.model.generatelabel.GenerateLabelRequestWrapper;
-import io.github.dft.flipkart.version3.model.generatelabel.GenerateLabelResponseWrapper;
-import io.github.dft.flipkart.version3.model.shipment.ShipmentWrapper;
+import io.github.dft.flipkart.model.v3.generatelabel.GenerateLabelRequestWrapper;
+import io.github.dft.flipkart.model.v3.generatelabel.GenerateLabelResponseWrapper;
+import io.github.dft.flipkart.model.v3.shipment.ShipmentWrapper;
 
 import java.net.URI;
 import java.net.http.HttpRequest;

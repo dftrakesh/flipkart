@@ -1,6 +1,6 @@
-package io.github.dft.flipkart.version3.model.generatelabel;
+package io.github.dft.flipkart.model.v3.generatelabel;
 
-import io.github.dft.flipkart.version3.model.shipment.Dimension;
+import io.github.dft.flipkart.model.v3.shipment.Dimension;
 import lombok.Data;
 
 @Data

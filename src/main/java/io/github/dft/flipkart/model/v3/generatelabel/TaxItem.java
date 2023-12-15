@@ -1,4 +1,4 @@
-package io.github.dft.flipkart.version3.model.generatelabel;
+package io.github.dft.flipkart.model.v3.generatelabel;
 
 import lombok.Data;
 

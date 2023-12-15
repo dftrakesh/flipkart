@@ -1,4 +1,4 @@
-package io.github.dft.flipkart.version3.model.shipment;
+package io.github.dft.flipkart.model.v3.shipment;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.github.dft.flipkart.model.common.LocalDateTimeDeserializer;
