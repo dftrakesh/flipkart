@@ -13,5 +13,5 @@ public class Invoice {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date invoiceDate;
 
-    private String orderNumber;
+    private String invoiceNumber;
 }
