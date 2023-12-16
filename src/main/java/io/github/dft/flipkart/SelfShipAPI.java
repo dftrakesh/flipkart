@@ -1,8 +1,8 @@
 package io.github.dft.flipkart;
 
 import io.github.dft.flipkart.authenticatonapi.AccessCredential;
-import io.github.dft.flipkart.model.orderapi.selfship.ShipmentRequest;
-import io.github.dft.flipkart.model.orderapi.selfship.ShipmentResponseWrapper;
+import io.github.dft.flipkart.model.v3.selfship.ShipmentRequest;
+import io.github.dft.flipkart.model.v3.selfship.ShipmentResponseWrapper;
 
 import java.net.URI;
 import java.net.http.HttpRequest;
