@@ -1,8 +1,9 @@
 package io.github.dft.flipkart.model.v3.shipment;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import io.github.dft.flipkart.model.common.LocalDateTimeDeserializer;
-import io.github.dft.flipkart.model.v2.order.OrderItem;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.github.dft.flipkart.model.common.LocalDateTimeDeserializerV3;
+import io.github.dft.flipkart.model.common.LocalDateTimeSerializer;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -20,12 +21,16 @@ public class Shipment {
     private List<Forms> forms;
     private String shipmentType;
 
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializerV3.class)
     private LocalDateTime dispatchByDate;
 
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializerV3.class)
     private LocalDateTime dispatchAfterDate;
 
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializerV3.class)
     private LocalDateTime updatedAt;
 }
