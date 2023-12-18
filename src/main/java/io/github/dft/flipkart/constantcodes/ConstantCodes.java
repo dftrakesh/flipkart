@@ -10,7 +10,8 @@ public interface ConstantCodes {
     String LABELS_ENDPOINT = "/labels";
 
     String TOKEN_NAME = "Bearer ";
-
+    String ACCEPT = "Accept";
+    String APPLICATION_PDF = "application/pdf";
 
     String CONTENT_TYPE = "Content-Type";
     String AUTHORIZATION_HEADER = "Authorization";

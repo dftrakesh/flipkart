@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.SneakyThrows;
 
+import java.io.InputStream;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -16,10 +17,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.ACCEPT;
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.APPLICATION_PDF;
 import static io.github.dft.flipkart.constantcodes.ConstantCodes.AUTHORIZATION_HEADER;
 import static io.github.dft.flipkart.constantcodes.ConstantCodes.CONTENT_TYPE;
 import static io.github.dft.flipkart.constantcodes.ConstantCodes.CONTENT_TYPE_APPLICATION_JSON;
-import static io.github.dft.flipkart.constantcodes.ConstantCodes.TOKEN_NAME;
 
 @AllArgsConstructor
 @Builder(builderMethodName = "newBuilder", toBuilder = true)
@@ -37,6 +39,7 @@ public class FlipkartSdk {
     protected HttpClient client;
     protected AccessCredential accessCredential;
     private ObjectMapper objectMapper;
+    private AccessCredentialApi accessCredentialApi;
 
     @SneakyThrows
     public FlipkartSdk(AccessCredential accessCredential) {
@@ -44,6 +47,7 @@ public class FlipkartSdk {
         client = HttpClient.newHttpClient();
         this.objectMapper = new ObjectMapper();
         this.accessCredential = accessCredential;
+        accessCredentialApi = new AccessCredentialApi(accessCredential);
     }
 
     @SneakyThrows
@@ -51,8 +55,16 @@ public class FlipkartSdk {
         return HttpRequest.newBuilder(uri)
                 .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(object)))
                 .header(CONTENT_TYPE, CONTENT_TYPE_APPLICATION_JSON)
-                .headers(AUTHORIZATION_HEADER, TOKEN_NAME.concat(accessCredential.getAccessToken()))
+                .headers(AUTHORIZATION_HEADER, accessCredentialApi.getAuthorizationHeader())
                 .build();
+    }
+
+    public HttpRequest postWithEmptyBody(URI uri) {
+        return HttpRequest.newBuilder(uri)
+            .POST(HttpRequest.BodyPublishers.ofString(""))
+            .header(ACCEPT, APPLICATION_PDF)
+            .header(AUTHORIZATION_HEADER, accessCredentialApi.getAuthorizationHeader())
+            .build();
     }
 
     @SneakyThrows
@@ -60,7 +72,7 @@ public class FlipkartSdk {
         return HttpRequest.newBuilder(uri)
                 .GET()
                 .header(CONTENT_TYPE, CONTENT_TYPE_APPLICATION_JSON)
-                .headers(AUTHORIZATION_HEADER, TOKEN_NAME.concat(accessCredential.getAccessToken()))
+                .headers(AUTHORIZATION_HEADER, accessCredentialApi.getAuthorizationHeader())
                 .build();
     }
 
@@ -72,6 +84,11 @@ public class FlipkartSdk {
                 .thenApplyAsync(HttpResponse::body)
                 .thenApplyAsync(responseBody -> convertBody(responseBody, tClass))
                 .get();
+    }
+
+    @SneakyThrows
+    protected HttpResponse<InputStream> getRequestWrappedToDownloadPdf(HttpRequest request) {
+        return client.send(request, HttpResponse.BodyHandlers.ofInputStream());
     }
 
     @SneakyThrows
