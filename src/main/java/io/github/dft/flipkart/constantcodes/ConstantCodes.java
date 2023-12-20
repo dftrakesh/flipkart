@@ -4,10 +4,12 @@ public interface ConstantCodes {
     String API_BASE_END_POINT = "https://api.flipkart.net/sellers";
     String VERSION_V3_ENDPOINT = "/v3";
     String SLASH_CHARACTER = "/";
-    String INVENTORY_ENDPOINT = "/listings";
-    String UPDATE_PRODUCT = "/update";
+    String LISTING_ENDPOINT = "/listings";
+    String UPDATE_ENDPOINT = "/update";
     String SHIPMENT_ENDPOINT = "/shipments";
     String LABELS_ENDPOINT = "/labels";
+    String INVENTORY_ENDPOINT = "/inventory";
+    String DISPATCH_ENDPOINT = "/dispatch";
 
     String TOKEN_NAME = "Bearer ";
     String ACCEPT = "Accept";
