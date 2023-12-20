@@ -13,7 +13,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -23,7 +22,6 @@ import static io.github.dft.flipkart.constantcodes.ConstantCodes.APPLICATION_PDF
 import static io.github.dft.flipkart.constantcodes.ConstantCodes.AUTHORIZATION_HEADER;
 import static io.github.dft.flipkart.constantcodes.ConstantCodes.CONTENT_TYPE;
 import static io.github.dft.flipkart.constantcodes.ConstantCodes.CONTENT_TYPE_APPLICATION_JSON;
-import static io.github.dft.flipkart.constantcodes.ConstantCodes.TOKEN_NAME;
 
 @AllArgsConstructor
 @Builder(builderMethodName = "newBuilder", toBuilder = true)
@@ -36,11 +34,12 @@ public class FlipkartSdk {
     String REFRESH_TOKEN = "refresh_token";
     String CLIENT_SECRET = "client_secret";
     String CLIENT_ID = "client_id";
-    String OAUTH_BASE_END_POINT = "https://api.flipkart.net/oauth-service/oauth/token";
+    String OAUTH_BASE_END_POINT = "https://api.flipkart.net/oauth-service/oauth/token?";
 
     protected HttpClient client;
     protected AccessCredential accessCredential;
     private ObjectMapper objectMapper;
+    private AccessCredentialApi accessCredentialApi;
 
     @SneakyThrows
     public FlipkartSdk(AccessCredential accessCredential) {
@@ -48,6 +47,7 @@ public class FlipkartSdk {
         client = HttpClient.newHttpClient();
         this.objectMapper = new ObjectMapper();
         this.accessCredential = accessCredential;
+        accessCredentialApi = new AccessCredentialApi(accessCredential);
     }
 
     @SneakyThrows
@@ -55,7 +55,7 @@ public class FlipkartSdk {
         return HttpRequest.newBuilder(uri)
                 .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(object)))
                 .header(CONTENT_TYPE, CONTENT_TYPE_APPLICATION_JSON)
-                .headers(AUTHORIZATION_HEADER, getAuthorizationHeader())
+                .headers(AUTHORIZATION_HEADER, accessCredentialApi.getAuthorizationHeader())
                 .build();
     }
 
@@ -63,7 +63,7 @@ public class FlipkartSdk {
         return HttpRequest.newBuilder(uri)
             .POST(HttpRequest.BodyPublishers.ofString(""))
             .header(ACCEPT, APPLICATION_PDF)
-            .header(AUTHORIZATION_HEADER, getAuthorizationHeader())
+            .header(AUTHORIZATION_HEADER, accessCredentialApi.getAuthorizationHeader())
             .build();
     }
 
@@ -72,7 +72,7 @@ public class FlipkartSdk {
         return HttpRequest.newBuilder(uri)
                 .GET()
                 .header(CONTENT_TYPE, CONTENT_TYPE_APPLICATION_JSON)
-                .headers(AUTHORIZATION_HEADER, getAuthorizationHeader())
+                .headers(AUTHORIZATION_HEADER, accessCredentialApi.getAuthorizationHeader())
                 .build();
     }
 
@@ -133,33 +133,6 @@ public class FlipkartSdk {
             accessCredential.setAccessToken(accessTokenResponse.getAccessToken());
             accessCredential.setExpiresIn(LocalDateTime.now().plusSeconds(accessTokenResponse.getExpiresIn()));
         }
-    }
-
-    @SneakyThrows
-    public AccessTokenResponse getAccessToken(HashMap<String, String> params) {
-
-        URI uri = URI.create(OAUTH_BASE_END_POINT);
-        uri = addParameters(uri, params);
-        String auth = accessCredential.getClientId() + ":" + accessCredential.getClientSecret();
-        byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes());
-        String authHeader = "Basic " + new String(encodedAuth);
-        HttpRequest request = HttpRequest.newBuilder(uri)
-            .header(AUTHORIZATION_HEADER, authHeader)
-            .GET()
-            .build();
-
-        return getRequestWrapped(request, AccessTokenResponse.class);
-    }
-
-    @SneakyThrows
-    protected String getAuthorizationHeader() {
-
-        HashMap<String, String> params = new HashMap<>();
-        params.put("grant_type", "client_credentials");
-        params.put("scope", "Seller_Api");
-        AccessTokenResponse accessTokenResponse = getAccessToken(params);
-        accessCredential.setAccessToken(accessTokenResponse.getAccessToken());
-        return  TOKEN_NAME + accessTokenResponse.getAccessToken();
     }
 
     @SneakyThrows
