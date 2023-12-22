@@ -3,7 +3,6 @@ package io.github.dft.flipkart;
 import io.github.dft.flipkart.authenticatonapi.AccessCredential;
 import io.github.dft.flipkart.model.v2.order.OrderItem;
 import io.github.dft.flipkart.model.v2.order.OrderItemResponse;
-import io.github.dft.flipkart.model.v2.order.OrderRequest;
 import io.github.dft.flipkart.model.v2.order.OrderResponse;
 import io.github.dft.flipkart.model.v2.order.shipmentdetails.ShipmentResponse;
 
@@ -25,7 +24,7 @@ public class OrderApi extends FlipkartSdk {
         super(accessCredential);
     }
 
-    public OrderResponse searchAllOrder(OrderRequest orderRequest) {
+    public OrderResponse searchAllOrder(Object orderRequest) {
         URI uri = URI.create(API_BASE_END_POINT + VERSION_V2_ENDPOINT + ORDER_ENDPOINT + ORDER_SEARCH);
 
         HttpRequest request = postWithObject(uri, orderRequest);
