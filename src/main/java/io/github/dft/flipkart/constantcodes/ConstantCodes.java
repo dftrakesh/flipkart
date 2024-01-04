@@ -9,6 +9,7 @@ public interface ConstantCodes {
     String SHIPMENT_ENDPOINT = "/shipments";
     String LABELS_ENDPOINT = "/labels";
     String DISPATCH_ENDPOINT = "/dispatch";
+    String FILTER_ENDPOINT = "/filter";
 
     String TOKEN_NAME = "Bearer ";
     String ACCEPT = "Accept";
