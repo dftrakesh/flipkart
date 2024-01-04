@@ -6,16 +6,14 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import lombok.SneakyThrows;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.OffsetDateTime;
 
 public class LocalDateTimeSerializer extends JsonSerializer<LocalDateTime> {
-
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
     @Override
     @SneakyThrows
     public void serialize(LocalDateTime localDateTime, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) {
-        String formattedDateTime = localDateTime.format(formatter);
+        String formattedDateTime = localDateTime.atOffset(OffsetDateTime.now().getOffset()).toString();
         jsonGenerator.writeString(formattedDateTime);
     }
 }
