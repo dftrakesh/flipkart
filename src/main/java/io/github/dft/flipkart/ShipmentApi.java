@@ -4,6 +4,8 @@ import io.github.dft.flipkart.authenticatonapi.AccessCredential;
 import io.github.dft.flipkart.model.v3.common.ShipmentResponseWrapper;
 import io.github.dft.flipkart.model.v3.generatelabel.GenerateLabelRequestWrapper;
 import io.github.dft.flipkart.model.v3.readytodispatch.ReadyToDispatchRequest;
+import io.github.dft.flipkart.model.v3.shipment.ShipmentRequestForCancelledOrder;
+import io.github.dft.flipkart.model.v3.shipment.ShipmentResponseOfCancelledOrder;
 import io.github.dft.flipkart.model.v3.shipment.ShipmentWrapper;
 
 import java.io.InputStream;
@@ -14,6 +16,7 @@ import java.util.HashMap;
 
 import static io.github.dft.flipkart.constantcodes.ConstantCodes.API_BASE_END_POINT;
 import static io.github.dft.flipkart.constantcodes.ConstantCodes.DISPATCH_ENDPOINT;
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.FILTER_ENDPOINT;
 import static io.github.dft.flipkart.constantcodes.ConstantCodes.LABELS_ENDPOINT;
 import static io.github.dft.flipkart.constantcodes.ConstantCodes.SHIPMENT_ENDPOINT;
 import static io.github.dft.flipkart.constantcodes.ConstantCodes.SLASH_CHARACTER;
@@ -23,6 +26,20 @@ public class ShipmentApi extends FlipkartSdk {
 
     public ShipmentApi(AccessCredential accessCredential) {
         super(accessCredential);
+    }
+
+    public ShipmentResponseOfCancelledOrder searchAllShipment(ShipmentRequestForCancelledOrder shipmentRequestForCancelledOrder) {
+        URI uri = URI.create(API_BASE_END_POINT + VERSION_V3_ENDPOINT + SHIPMENT_ENDPOINT + FILTER_ENDPOINT);
+
+        HttpRequest request = postWithObject(uri, shipmentRequestForCancelledOrder);
+        return getRequestWrapped(request, ShipmentResponseOfCancelledOrder.class);
+    }
+
+    public ShipmentResponseOfCancelledOrder searchNextPageShipment(String endPoint) {
+        URI uri = URI.create(API_BASE_END_POINT + endPoint);
+
+        HttpRequest request = get(uri);
+        return getRequestWrapped(request, ShipmentResponseOfCancelledOrder.class);
     }
 
     public ShipmentWrapper getShipmentDetailsByOrderId(HashMap<String, String> params) {
