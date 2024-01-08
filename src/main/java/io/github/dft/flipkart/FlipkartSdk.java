@@ -13,6 +13,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -51,6 +52,7 @@ public class FlipkartSdk {
 
     @SneakyThrows
     protected HttpRequest postWithObject(URI uri, Object object) {
+        refreshAccessToken();
         return HttpRequest.newBuilder(uri)
                 .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(object)))
                 .header(CONTENT_TYPE, CONTENT_TYPE_APPLICATION_JSON)
@@ -59,6 +61,7 @@ public class FlipkartSdk {
     }
 
     public HttpRequest postWithEmptyBody(URI uri) {
+        refreshAccessToken();
         return HttpRequest.newBuilder(uri)
             .POST(HttpRequest.BodyPublishers.ofString(""))
             .header(ACCEPT, APPLICATION_PDF)
@@ -68,6 +71,7 @@ public class FlipkartSdk {
 
     @SneakyThrows
     protected HttpRequest get(URI uri) {
+        refreshAccessToken();
         return HttpRequest.newBuilder(uri)
                 .GET()
                 .header(CONTENT_TYPE, CONTENT_TYPE_APPLICATION_JSON)
@@ -110,23 +114,24 @@ public class FlipkartSdk {
         return CompletableFuture.completedFuture(resp);
     }
 
-    @SneakyThrows
     protected void refreshAccessToken() {
 
         if (accessCredential.getAccessToken() == null || accessCredential.getExpiresIn() == null || LocalDateTime.now().isAfter(accessCredential.getExpiresIn())) {
             HashMap<String, String> params = new HashMap<>();
-            params.put(GRANT_TYPE, REFRESH_TOKEN);
-            params.put(CLIENT_SECRET, accessCredential.getClientSecret());
-            params.put(CLIENT_ID, accessCredential.getClientId());
-            params.put(REFRESH_TOKEN, accessCredential.getRefreshToken());
+            params.put("grant_type", "client_credentials");
+            params.put("scope", "Seller_Api");
 
-            URI uri = new URI(OAUTH_BASE_END_POINT);
+            URI uri = URI.create(OAUTH_BASE_END_POINT);
             uri = addParameters(uri, params);
 
+            String auth = accessCredential.getClientId() + ":" + accessCredential.getClientSecret();
+            String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes());
+            String authHeader = "Basic " + encodedAuth;
+
             HttpRequest request = HttpRequest.newBuilder(uri)
-                    .POST(HttpRequest.BodyPublishers.noBody())
-                    .header(CONTENT_TYPE, CONTENT_TYPE_APPLICATION_JSON)
-                    .build();
+                .header(AUTHORIZATION_HEADER, authHeader)
+                .GET()
+                .build();
 
             AccessTokenResponse accessTokenResponse = getRequestWrapped(request, AccessTokenResponse.class);
             accessCredential.setAccessToken(accessTokenResponse.getAccessToken());
