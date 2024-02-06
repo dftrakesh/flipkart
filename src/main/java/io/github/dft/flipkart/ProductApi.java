@@ -16,6 +16,7 @@ import static io.github.dft.flipkart.constantcodes.ConstantCodes.CONTENT_TYPE;
 import static io.github.dft.flipkart.constantcodes.ConstantCodes.CONTENT_TYPE_APPLICATION_JSON;
 import static io.github.dft.flipkart.constantcodes.ConstantCodes.INVENTORY_ENDPOINT;
 import static io.github.dft.flipkart.constantcodes.ConstantCodes.SLASH_CHARACTER;
+import static io.github.dft.flipkart.constantcodes.ConstantCodes.TOKEN_NAME;
 import static io.github.dft.flipkart.constantcodes.ConstantCodes.UPDATE_PRODUCT;
 import static io.github.dft.flipkart.constantcodes.ConstantCodes.VERSION_V3_ENDPOINT;
 
@@ -52,7 +53,7 @@ public class ProductApi extends FlipkartSdk {
                 .concat(VERSION_V3_ENDPOINT).concat(SLASH_CHARACTER + skuId));
         HttpRequest request = HttpRequest.newBuilder(uri)
                 .GET()
-                .headers(AUTHORIZATION_HEADER, accessCredentialApi.getAuthorizationHeader())
+                .headers(AUTHORIZATION_HEADER, TOKEN_NAME.concat(accessCredential.getAccessToken()))
                 .build();
 
         return getRequestWrapped(request, Available.class);
